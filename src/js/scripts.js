@@ -1,19 +1,20 @@
-import * as THREE from 'three';
-import {OrbitControls} from 'three/examples/jsm/controls/OrbitControls.js';
+import * as THREE from "three";
+import gsap from "gsap";
+import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 
-const renderer = new THREE.WebGLRenderer({antialias: true});
+const renderer = new THREE.WebGLRenderer({ antialias: true });
 renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
 
 // Sets the color of the background
-renderer.setClearColor(0xFEFEFE);
+renderer.setClearColor(0xfefefe);
 
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(
-    45,
-    window.innerWidth / window.innerHeight,
-    0.1,
-    1000
+  45,
+  window.innerWidth / window.innerHeight,
+  0.1,
+  1000
 );
 
 // Sets orbit control to move the camera around
@@ -31,14 +32,38 @@ scene.add(gridHelper);
 const axesHelper = new THREE.AxesHelper(4);
 scene.add(axesHelper);
 
+// let z;
+// const zfinal = 14;
+
+// window.addEventListener("keydown", ()=> {
+//     z = camera.position.z;
+// })
+
 function animate() {
-    renderer.render(scene, camera);
+  // z += 0.1;
+  // if (z < zfinal)
+  //     camera.position.z = z;
+  gsap.to(camera.position, {
+    z: 20,
+    duration: 3,
+    onUpdate: function() {
+        camera.lookAt(0, 0, 0);
+    }
+  });
+  gsap.to(camera.position, {
+    y: 20,
+    duration: 3,
+    onUpdate: function() {
+        camera.lookAt(0, 0, 0);
+    }
+  });
+  renderer.render(scene, camera);
 }
 
 renderer.setAnimationLoop(animate);
 
-window.addEventListener('resize', function() {
-    camera.aspect = window.innerWidth / window.innerHeight;
-    camera.updateProjectionMatrix();
-    renderer.setSize(window.innerWidth, window.innerHeight);
+window.addEventListener("resize", function () {
+  camera.aspect = window.innerWidth / window.innerHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize(window.innerWidth, window.innerHeight);
 });
