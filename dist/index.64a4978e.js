@@ -609,24 +609,33 @@ scene.add(axesHelper);
 // window.addEventListener("keydown", ()=> {
 //     z = camera.position.z;
 // })
+window.addEventListener("keypress", ()=>{
+    (0, _gsapDefault.default).to(camera.position, {
+        z: 20,
+        duration: 2.5,
+        onUpdate: ()=>{
+            camera.lookAt(0, 0, 0);
+        }
+    }).to(camera.position, {
+        y: 10,
+        duration: 2.5,
+        onUpdate: ()=>{
+            camera.lookAt(0, 0, 0);
+        }
+    }).to(camera.position, {
+        x: 10,
+        y: 5,
+        z: 3,
+        duration: 2.5,
+        onUpdate: ()=>{
+            camera.lookAt(0, 0, 0);
+        }
+    });
+});
 function animate() {
     // z += 0.1;
     // if (z < zfinal)
     //     camera.position.z = z;
-    (0, _gsapDefault.default).to(camera.position, {
-        z: 20,
-        duration: 3,
-        onUpdate: function() {
-            camera.lookAt(0, 0, 0);
-        }
-    });
-    (0, _gsapDefault.default).to(camera.position, {
-        y: 20,
-        duration: 3,
-        onUpdate: function() {
-            camera.lookAt(0, 0, 0);
-        }
-    });
     renderer.render(scene, camera);
 }
 renderer.setAnimationLoop(animate);
